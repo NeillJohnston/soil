@@ -1,6 +1,6 @@
 content:
   - block: |
-      ### **_{{ sys.hostname }}_ @ {{ pre.sysName }}**
+      # **_{{ sys.hostname }}_ @ {{ pre.sysName }}**
 
       Hello and welcome to _Soil_.
 

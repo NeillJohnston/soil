@@ -9,10 +9,9 @@
     import { expr } from "$lib/expr";
     import { onMount } from "svelte";
 
-    export let data: Config;
-    const config = data;
-
-    let sysdata: Data | undefined = undefined;
+    export let data: { config: Config, data: Data };
+    const config = data.config;
+    let _data = data.data;
 
     let md = new Marked({
         extensions: [{
@@ -29,34 +28,28 @@
                     };
                 }
             },
-            renderer: (token: any) => expr(token.expr, sysdata!)
+            renderer: (token: any) => expr(token.expr, _data)
         }]
     });
 
     const getData = async () => {
         const res = await fetch('/api/data');
-        sysdata = await res.json();
+        _data = await res.json();
     }
 
     onMount(() => {
         getData();
-
         setInterval(getData, 1000);
     });
 </script>
 
-{#if !sysdata}
-<div class="content">
-    Loading
-</div>
-{:else}
 <div class="content">
     <div>
         {#each config.content as blockOrRow}
         {#if blockOrRow.block}
         <Block bind:block={blockOrRow} bind:md />
         {:else}
-        <Row bind:row={blockOrRow} bind:md bind:data={sysdata} />
+        <Row bind:row={blockOrRow} bind:md bind:data={_data} />
         {/if}
         {/each}
     </div>
@@ -65,7 +58,6 @@
         <em>soil</em>
     </div>
 </div>
-{/if}
 
 <style>
     .spacer {

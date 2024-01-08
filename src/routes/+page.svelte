@@ -8,7 +8,7 @@
     import { onMount } from "svelte";
     import Content from './Content.svelte';
 
-    export let data: { config: Config, data: Data };
+    export let data: { config: Config, data: Data, yamlError: any, zodError: any };
     const config = data.config;
     let _data = data.data;
 
@@ -46,9 +46,45 @@
     });
 </script>
 
+{#if data.yamlError}
+
+<div class="content desktop error">
+    Error: could not parse config.
+</div>
+<div class="content mobile error">
+    Error: could not parse config.
+</div>
+
+{:else if data.zodError}
+
+<div class="content desktop error">
+    Error: invalid config, found issues at:
+
+    {#each data.zodError as error}
+    <br/>  - {error.path.join('.')}
+    {/each}
+</div>
+<div class="content mobile error">
+    Error: invalid config, found issues at:
+
+    {#each data.zodError as error}
+    <br/>  - {error.path.join('.')}
+    {/each}
+</div>
+
+{:else}
+
 <div class="content desktop">
     <Content bind:data={_data} bind:md bind:content />
 </div>
 <div class="content mobile">
     <Content bind:data={_data} bind:md bind:content={contentMobile} />
 </div>
+
+{/if}
+
+<style>
+    .error {
+        color: red;
+    }
+</style>

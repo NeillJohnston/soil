@@ -1,29 +1,7 @@
-export interface Config {
-    content: Content;
-    'content-mobile'?: Content;
-    theme?: {
-        light?: Theme;
-        dark?: Theme;
-    };
-}
-
-export interface Content {
-    main: BlockOrRow[];
-    footer?: BlockOrRow[];
-}
-
-export type BlockOrRow = Block | Row;
+import { z } from 'zod';
 
 export type TextAlign = 'left' | 'center' | 'right';
-
-export interface Block {
-    block: string;
-    align?: TextAlign;
-}
-
-export interface Row {
-    row: Cell[];
-}
+const zTextAlign = z.string().regex(/left|center|right/);
 
 export interface Cell {
     text?: string;
@@ -34,12 +12,71 @@ export interface Cell {
     size?: number;
     align?: TextAlign;
 }
+const zCell = z.object({
+    text: z.string().optional(),
+    bars: z.array(z.object({
+        fracx: z.string().optional(),
+        color: z.string().optional()
+    })).optional(),
+    size: z.number().optional(),
+    align: zTextAlign.optional()
+});
+
+export interface Block {
+    block: string;
+    align?: TextAlign;
+}
+const zBlock = z.object({
+    block: z.string(),
+    align: zTextAlign.optional()
+})
+
+export interface Row {
+    row: Cell[];
+}
+const zRow = z.object({
+    row: z.array(zCell)
+});
+
+export type BlockOrRow = Block | Row;
+const zBlockOrRow = z.union([zBlock, zRow]);
+
+export interface Content {
+    main: BlockOrRow[];
+    footer?: BlockOrRow[];
+}
+const zContent = z.object({
+    main: z.array(zBlockOrRow),
+    footer: z.array(zBlockOrRow).optional()
+});
 
 export interface Theme {
     bg: string;
     text: string;
     accent: { [key: string]: string }
 }
+const zTheme = z.object({
+    bg: z.string(),
+    text: z.string(),
+    accent: z.map(z.string(), z.string())
+});
+
+export interface Config {
+    content: Content;
+    'content-mobile'?: Content;
+    theme?: {
+        light?: Theme;
+        dark?: Theme;
+    };
+}
+export const zConfig = z.object({
+    content: zContent,
+    'content-mobile': zContent.optional(),
+    theme: z.object({
+        light: zTheme.optional(),
+        dark: zTheme.optional(),
+    }).optional()
+});
 
 export interface SystemData {
     time: {

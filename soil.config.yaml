@@ -28,7 +28,7 @@ content:
             color: '#ccc'
           - color: '#eee'
     - row:
-      - size: 3
+      - size: "3"
       - text: "{{ cpu.temp.main }}°C"
         bars:
           - fracx: clamp(cpu.temp.main - 35, 0, 40)/40

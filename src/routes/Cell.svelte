@@ -7,9 +7,12 @@
     export let md: Marked;
     export let data: Data;
 
+    const align = cell.align ?? 'left';
+
     let html = '';
     let bars: { frac: number, color: string }[] = [];
     $: {
+        // Reactive block to force re-render when data changes
         data;
 
         // @ts-ignore: md.parseInline can optionally return a Promise, which we don't use
@@ -50,7 +53,7 @@
         <div class="bar" style:flex={bar.frac} style:background-color={bar.color} />
         {/each}
     </div>
-    <div class="text">
+    <div class={`text ${align}`}>
         {@html html}
     </div>
 </div>
@@ -76,6 +79,8 @@
     }
 
     .text {
+        width: calc(100% - 8px);
+        box-sizing: border-box;
         position: absolute;
         padding: 4px;
     }

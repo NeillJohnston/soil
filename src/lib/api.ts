@@ -1,16 +1,24 @@
 export interface Config {
-    content: BlockOrRow[];
-    'content-mobile'?: BlockOrRow[];
+    content: Content;
+    'content-mobile'?: Content;
     theme?: {
         light?: Theme;
         dark?: Theme;
     };
 }
 
+export interface Content {
+    main: BlockOrRow[];
+    footer?: BlockOrRow[];
+}
+
 export type BlockOrRow = Block | Row;
+
+export type TextAlign = 'left' | 'center' | 'right';
 
 export interface Block {
     block: string;
+    align?: TextAlign;
 }
 
 export interface Row {
@@ -24,6 +32,7 @@ export interface Cell {
         color?: string;
     }[];
     size?: number;
+    align?: TextAlign;
 }
 
 export interface Theme {

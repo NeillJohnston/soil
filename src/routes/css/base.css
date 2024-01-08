@@ -49,3 +49,8 @@ p {
     margin-top: 4px;
     margin-bottom: 4px;
 }
+
+/* Text align utils */
+.text.left   { text-align: left; }
+.text.center { text-align: center; }
+.text.right  { text-align: right; }

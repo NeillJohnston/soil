@@ -1,56 +1,71 @@
 content:
-  - block: |
-      # Welcome to Soil
+  main:
+    - block: |
+        # Welcome to Soil
 
-      If you know your party's extension, you may enter it at any time.
+        If you know your party's extension, you may enter it at any time.
 
-      ---
+        ---
 
-  - row:
-    - text: "{{ pre.osName }}"
-    - text: "{{ pre.localeTime }}"
-  - row:
-    - text: ""
-    - text: "Uptime: {{ pre.uptimeClock }}"
+    - row:
+      - text: "{{ pre.osName }}"
+      - text: "{{ pre.localeTime }}"
+        align: right
+    - row:
+      - text: ""
+      - text: "Uptime: {{ pre.uptimeClock }}"
+        align: right
 
-  - block: |
-      ---
+    - block: |
+        ---
 
-  - row:
-    - text: "{{ pre.cpuName }}"
-      size: 3
-    - text: "{{ fix(100*cpu.load, 2) }}%"
-      bars:
-        - fracx: cpu.load
-          color: '#ccc'
-        - color: '#eee'
-  - row:
-    - size: 3
-    - text: "{{ cpu.temp.main }}°C"
-      bars:
-        - fracx: clamp(cpu.temp.main - 35, 0, 40)/40
-          color: '#ccc'
-        - color: '#eee'
-  - row:
-    - text: "{{ fix(pre.memTotalGiB, 2) }}GiB RAM"
-      size: 3
-    - text: "{{ fix(100 * pre.memUsedFrac, 2) }}%"
-      bars:
-        - fracx: pre.memUsedFrac
-          color: '#ccc'
-        - color: '#eee'
+    - row:
+      - text: "{{ pre.cpuName }}"
+        size: 3
+      - text: "{{ fix(100*cpu.load, 2) }}%"
+        bars:
+          - fracx: cpu.load
+            color: '#ccc'
+          - color: '#eee'
+    - row:
+      - size: 3
+      - text: "{{ cpu.temp.main }}°C"
+        bars:
+          - fracx: clamp(cpu.temp.main - 35, 0, 40)/40
+            color: '#ccc'
+          - color: '#eee'
+    - row:
+      - text: "{{ fix(pre.memTotalGiB, 2) }}GiB RAM"
+        size: 3
+      - text: "{{ fix(100 * pre.memUsedFrac, 2) }}%"
+        bars:
+          - fracx: pre.memUsedFrac
+            color: '#ccc'
+          - color: '#eee'
+  footer:
+    - block: "_powered by soil_"
+      align: center
 
 content-mobile:
-  - block: |
-      # Fuck mobile users
+  main:
+    - row:
+      - text: "CPU: {{ fix(100*cpu.load, 2) }}%"
+        bars:
+          - fracx: cpu.load
+            color: '#ccc'
+          - color: '#eee'
 
-      Seriously.
+    - row:
+      - text: "RAM: ({{ fix(100 * pre.memUsedFrac, 2) }}%)"
+        bars:
+          - fracx: pre.memUsedFrac
+            color: '#ccc'
+          - color: '#eee'
 
-      ---
+    - block: |
+        # Welcome to Soil
 
-  - row:
-    - text: "{{ pre.osName }}"
-    - text: "{{ pre.localeTime }}"
-  - row:
-    - text: ""
-    - text: "Uptime: {{ pre.uptimeClock }}"
+        We really don't care about our mobile users.
+  footer:
+    - block: "_powered by soil_"
+      align: center

@@ -7,9 +7,10 @@
     // export let data: Data;
 
     const html = md.parse(block.block);
+    const align = block.align ?? 'left';
 </script>
 
-<div class="block">
+<div class={`block text ${align}`}>
     {@html html}
 </div>
 

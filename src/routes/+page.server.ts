@@ -25,7 +25,8 @@ export const load = async ({ fetch }) => {
         zodError = [];
         for (const err of error.issues) {
             zodError.push({
-                path: err.path
+                path: err.path,
+                msg: err.message
             });
         }
     }

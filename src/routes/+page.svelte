@@ -12,8 +12,8 @@
     const config = data.config;
     let _data = data.data;
 
-    let content = config.content;
-    let contentMobile = config['content-mobile'] ?? config.content;
+    let content = config?.content;
+    let contentMobile = config?.['content-mobile'] ?? config?.content;
 
     let md = new Marked({
         extensions: [{
@@ -59,16 +59,14 @@
 
 <div class="content desktop error">
     Error: invalid config, found issues at:
-
     {#each data.zodError as error}
-    <br/>  - {error.path.join('.')}
+    <br/>  - {error.path.join('.')}: {error.msg}
     {/each}
 </div>
 <div class="content mobile error">
     Error: invalid config, found issues at:
-
     {#each data.zodError as error}
-    <br/>  - {error.path.join('.')}
+    <br/>  - {error.path.join('.')}: {error.msg}
     {/each}
 </div>
 

@@ -1,7 +1,10 @@
 export interface Config {
     content: BlockOrRow[];
-    light?: Theme;
-    dark?: Theme;
+    'content-mobile'?: BlockOrRow[];
+    theme?: {
+        light?: Theme;
+        dark?: Theme;
+    };
 }
 
 export type BlockOrRow = Block | Row;

@@ -4,17 +4,20 @@
 
     import type { Config, Data } from "$lib/api";
     import { Marked } from 'marked';
-    import Row from "./Row.svelte";
-    import Block from './Block.svelte';
     import { expr } from "$lib/expr";
     import { onMount } from "svelte";
+    import Content from './Content.svelte';
 
     export let data: { config: Config, data: Data };
     const config = data.config;
     let _data = data.data;
 
+    let content = config.content;
+    let contentMobile = config['content-mobile'] ?? config.content;
+
     let md = new Marked({
         extensions: [{
+            // Parse {{ expr }} as an inline JS expression to be eval'd
             name: 'jsExpr',
             level: 'inline',
             start: (src: string) => src.indexOf('{{'),
@@ -43,29 +46,9 @@
     });
 </script>
 
-<div class="content">
-    <div>
-        {#each config.content as blockOrRow}
-        {#if blockOrRow.block}
-        <Block bind:block={blockOrRow} bind:md />
-        {:else}
-        <Row bind:row={blockOrRow} bind:md bind:data={_data} />
-        {/if}
-        {/each}
-    </div>
-    <div class="spacer" />
-    <div class="footer">
-        <em>soil</em>
-    </div>
+<div class="content desktop">
+    <Content bind:data={_data} bind:md bind:content />
 </div>
-
-<style>
-    .spacer {
-        flex: 1;
-        min-height: 4rem;
-    }
-
-    .footer {
-        text-align: center;
-    }
-</style>
+<div class="content mobile">
+    <Content bind:data={_data} bind:md bind:content={contentMobile} />
+</div>

@@ -1,10 +1,10 @@
 content:
   - block: |
-      # **_{{ sys.hostname }}_ @ {{ pre.sysName }}**
+      # Welcome to Soil
 
-      Hello and welcome to _Soil_.
+      If you know your party's extension, you may enter it at any time.
 
-      If you know your party's extension, you may dial it at any time.
+      ---
 
   - row:
     - text: "{{ pre.osName }}"
@@ -12,6 +12,9 @@ content:
   - row:
     - text: ""
     - text: "Uptime: {{ pre.uptimeClock }}"
+
+  - block: |
+      ---
 
   - row:
     - text: "{{ pre.cpuName }}"
@@ -36,3 +39,18 @@ content:
         - fracx: pre.memUsedFrac
           color: '#ccc'
         - color: '#eee'
+
+content-mobile:
+  - block: |
+      # Fuck mobile users
+
+      Seriously.
+
+      ---
+
+  - row:
+    - text: "{{ pre.osName }}"
+    - text: "{{ pre.localeTime }}"
+  - row:
+    - text: ""
+    - text: "Uptime: {{ pre.uptimeClock }}"

@@ -1,0 +1,7 @@
+services:
+  soil:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./soil.config.yaml:/home/node/app/soil.config.yaml

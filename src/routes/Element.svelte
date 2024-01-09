@@ -11,7 +11,7 @@
 </script>
 
 {#if element.block}
-<Block block={element} bind:md />
+<Block block={element} bind:md bind:data />
 {:else if element.widget === 'theme-switcher'}
 <ThemeSwitcher />
 {:else}

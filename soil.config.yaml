@@ -1,71 +1,72 @@
 content:
   main:
     - block: |
-        # Welcome to Soil
+        # Hello Soil!
 
-        If you know your party's extension, you may enter it at any time.
+        Welcome to your Soil Startpage! Here you can host:
+        - Dynamic system stats
+        - Bookmarks and links
+        - Any other Markdown content you want
+
+        Check out your **soil.config.yaml** to start customizing.
 
         ---
 
     - row:
+      - text: "**System**"
+      - text: "{{ sys.hostname }} @ {{ pre.sysName }}"
+        size: 7
+    - row:
+      - text: "**OS**"
       - text: "{{ pre.osName }}"
-      - text: "{{ pre.localeTime }}"
-        align: right
+        size: 7
     - row:
-      - text: ""
-      - text: "Uptime: {{ pre.uptimeClock }}"
-        align: right
-
-    - block: |
-        ---
-
-    - row:
+      - text: "**CPU**"
       - text: "{{ pre.cpuName }}"
-        size: 3
-      - text: "{{ fix(100*cpu.load, 2) }}%"
-        bars:
-          - fracx: cpu.load
-            color: '#ccc'
-          - color: '#eee'
+        size: 7
     - row:
-      - size: "3"
-      - text: "{{ cpu.temp.main }}°C"
-        bars:
-          - fracx: clamp(cpu.temp.main - 35, 0, 40)/40
-            color: '#ccc'
-          - color: '#eee'
+      - text: "**Uptime**"
+      - text: "{{ pre.uptimeClock }}"
+        size: 7
     - row:
-      - text: "{{ fix(pre.memTotalGiB, 2) }}GiB RAM"
-        size: 3
-      - text: "{{ fix(100 * pre.memUsedFrac, 2) }}%"
+      - text: CPU ({{ fix(100 * cpu.load, 2) }}%)
         bars:
-          - fracx: pre.memUsedFrac
-            color: '#ccc'
-          - color: '#eee'
+        - fracx: cpu.load
+          color: bar
+        - color: bar-bg
+      - text: Memory ({{ fix(100 * pre.memUsedFrac, 2) }}%)
+        bars:
+        - fracx: pre.memUsedFrac
+          color: bar
+        - color: bar-bg
+  
+    - block: ---
+
+    - row:
+      - text: "[Soil](https://github.com/NeillJohnston/soil)"
+      - text: "[Link](http://example.com/)"
+      - text: "[Link](http://example.com/)"
+    - row:
+      - text: "[Link](http://example.com/)"
+      - text: "[Link](http://example.com/)"
+      - text: "[Link](http://example.com/)"
+    - row:
+      - text: "[Link](http://example.com/)"
+      - text: "[Link](http://example.com/)"
+      - text: "[Link](http://example.com/)"
+
   footer:
-    - block: "_powered by soil_"
-      align: center
+    - widget: theme-switcher
 
-content-mobile:
-  main:
-    - row:
-      - text: "CPU: {{ fix(100*cpu.load, 2) }}%"
-        bars:
-          - fracx: cpu.load
-            color: '#ccc'
-          - color: '#eee'
-
-    - row:
-      - text: "RAM: ({{ fix(100 * pre.memUsedFrac, 2) }}%)"
-        bars:
-          - fracx: pre.memUsedFrac
-            color: '#ccc'
-          - color: '#eee'
-
-    - block: |
-        # Welcome to Soil
-
-        We really don't care about our mobile users.
-  footer:
-    - block: "_powered by soil_"
-      align: center
+theme:
+  light:
+    bg: "#fff"
+    text: "#000"
+    bar: "#ccc"
+    bar-bg: "#eee"
+    
+  dark:
+    bg: "#000"
+    text: "#fff"
+    bar: "#444"
+    bar-bg: "#222"

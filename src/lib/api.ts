@@ -5,6 +5,7 @@ const zTextAlign = z.string().regex(/left|center|right/);
 
 export interface Cell {
     text?: string;
+    invert?: boolean;
     bars?: {
         fracx?: string;
         color?: string;
@@ -14,6 +15,7 @@ export interface Cell {
 }
 const zCell = z.object({
     text: z.string().optional(),
+    invert: z.boolean().optional(),
     bars: z.array(z.object({
         fracx: z.string().optional(),
         color: z.string().optional()
@@ -38,12 +40,19 @@ const zRow = z.object({
     row: z.array(zCell)
 });
 
-export type BlockOrRow = Block | Row;
-const zBlockOrRow = z.union([zBlock, zRow]);
+export interface Widget {
+    widget: 'theme-switcher'
+};
+const zWidget = z.object({
+    widget: z.literal('theme-switcher')
+});
+
+export type Element = Block | Row | Widget;
+const zBlockOrRow = z.union([zBlock, zRow, zWidget]);
 
 export interface Content {
-    main: BlockOrRow[];
-    footer?: BlockOrRow[];
+    main: Element[];
+    footer?: Element[];
 }
 const zContent = z.object({
     main: z.array(zBlockOrRow),
@@ -53,12 +62,10 @@ const zContent = z.object({
 export interface Theme {
     bg: string;
     text: string;
-    accent: { [key: string]: string }
 }
 const zTheme = z.object({
     bg: z.string(),
-    text: z.string(),
-    accent: z.map(z.string(), z.string())
+    text: z.string()
 });
 
 export interface Config {

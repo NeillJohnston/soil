@@ -8,6 +8,7 @@
     export let data: Data;
 
     const align = cell.align ?? 'left';
+    const invert = !!cell.invert;
 
     let html = '';
     let bars: { frac: number, color: string }[] = [];
@@ -23,7 +24,7 @@
             let rem = -1;
             cell.bars.forEach((bar, index) => {
                 let frac = 0;
-                let color = '#777';
+                let color = '';
                 if (!bar.fracx) {
                     rem = index;
                 }
@@ -31,7 +32,15 @@
                     frac = expr(bar.fracx, data);
                 }
                 if (bar.color) {
-                    color = bar.color;
+                    if (typeof document !== 'undefined') {
+                        if (document.documentElement.style.getPropertyValue(`--theme-${bar.color}`)) {
+                            color = `var(--theme-${bar.color})`;
+                        }
+                    }
+
+                    if (!color) {
+                        color = bar.color;
+                    }
                 }
                 
                 _bars.push({ frac, color });
@@ -53,7 +62,7 @@
         <div class="bar" style:flex={bar.frac} style:background-color={bar.color} />
         {/each}
     </div>
-    <div class={`text ${align}`}>
+    <div class={`text ${align}`} class:inverted={invert}>
         {@html html}
     </div>
 </div>
@@ -83,5 +92,9 @@
         box-sizing: border-box;
         position: absolute;
         padding: 4px;
+    }
+
+    .inverted {
+        color: var(--theme-bg);
     }
 </style>

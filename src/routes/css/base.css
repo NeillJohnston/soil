@@ -4,6 +4,10 @@
 :root {
     font-family: 'Ubuntu Mono';
     font-size: 20px;
+
+    color: var(--theme-text);
+    background-color: var(--theme-bg);
+    /* transition: color ease 0.4s, background-color ease 0.4s; */
 }
 
 .content {

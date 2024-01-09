@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Row, Data, BlockOrRow, Block } from "$lib/api";
+    import type { Row, Data, Element, Block } from "$lib/api";
     import { Marked } from 'marked';
 
     export let block: Block;

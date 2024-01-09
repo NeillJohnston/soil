@@ -2,9 +2,10 @@
     import './css/normalize.css';
     import './css/base.css'
 
-    import type { Config, Data } from "$lib/api";
-    import { Marked } from 'marked';
+    import type { Config, Data, Theme } from "$lib/api";
     import { expr } from "$lib/expr";
+    import { theme } from "$lib/theme";
+    import { Marked } from 'marked';
     import { onMount } from "svelte";
     import Content from './Content.svelte';
 
@@ -35,6 +36,28 @@
         }]
     });
 
+    const light = config.theme?.light ?? {
+        text: '#ffffff',
+        bg: '#000000'
+    };
+
+    const dark = config.theme?.dark ?? {
+        text: '#000000',
+        bg: '#ffffff'
+    };
+
+    const updateTheme = (name: 'light' | 'dark') => {
+        const theme = {
+            light: light,
+            dark: dark
+        }[name];
+
+        for (const key of Object.getOwnPropertyNames(theme)) {
+            // @ts-ignore
+            document.documentElement.style.setProperty(`--theme-${key}`, theme[key]);
+        }
+    }
+
     const getData = async () => {
         const res = await fetch('/api/data');
         _data = await res.json();
@@ -43,7 +66,16 @@
     onMount(() => {
         getData();
         setInterval(getData, 1000);
+
+        // @ts-ignore
+        $theme = window.localStorage.getItem('theme') ?? 'light';
     });
+
+    $: {
+        if (typeof document !== 'undefined') {
+            updateTheme($theme);
+        }
+    }
 </script>
 
 {#if data.yamlError}

@@ -1,10 +1,11 @@
 content:
   main:
+    - block: "{{ JSON.stringify({time,sys,cpu,gpu,mem,os,pre}) }}"
     - block: |
         # Hello Soil (desktop)!
 
         Welcome to your Soil page! Here you can host:
-        - Dynamic system stats
+        - Dynamic system info and stats
         - Bookmarks and links
         - Any other Markdown content you want
 
@@ -12,7 +13,7 @@ content:
 
         ---
     
-        ## System stats
+        ## System info
 
     - row:
       - text: CPU ({{ fix(100 * cpu.load, 2) }}%)
@@ -70,7 +71,7 @@ content-mobile:
         ### Hello Soil (mobile)!
 
         Welcome to your Soil page! Here you can host:
-        - Dynamic system stats
+        - Dynamic system info and stats
         - Bookmarks and links
         - Any other Markdown content you want
 
@@ -78,7 +79,7 @@ content-mobile:
 
         ---
     
-        #### System stats
+        #### System info
 
     - row:
       - text: CPU ({{ fix(100 * cpu.load, 2) }}%)

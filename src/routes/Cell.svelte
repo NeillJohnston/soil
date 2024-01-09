@@ -71,7 +71,6 @@
     .cell {
         box-sizing: border-box;
         padding: 4px;
-        height: calc(1em + 16px);
         position: relative;
     }
 
@@ -79,8 +78,9 @@
         height: calc(100% - 8px);
         width: calc(100% - 8px);
         box-sizing: border-box;
-        position: absolute;
         display: flex;
+        position: absolute;
+        z-index: 0;
     }
     
     .bar {
@@ -88,10 +88,11 @@
     }
 
     .text {
-        width: calc(100% - 8px);
+        width: 100%;
         box-sizing: border-box;
-        position: absolute;
         padding: 4px;
+        position: relative;
+        z-index: 1;
     }
 
     .inverted {

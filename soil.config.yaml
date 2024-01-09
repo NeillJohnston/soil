@@ -1,9 +1,9 @@
 content:
   main:
     - block: |
-        # Hello Soil!
+        # Hello Soil (desktop)!
 
-        Welcome to your Soil Startpage! Here you can host:
+        Welcome to your Soil page! Here you can host:
         - Dynamic system stats
         - Bookmarks and links
         - Any other Markdown content you want
@@ -11,23 +11,9 @@ content:
         Check out your **soil.config.yaml** to start customizing.
 
         ---
+    
+        ## System stats
 
-    - row:
-      - text: "**System**"
-      - text: "{{ sys.hostname }} @ {{ pre.sysName }}"
-        size: 7
-    - row:
-      - text: "**OS**"
-      - text: "{{ pre.osName }}"
-        size: 7
-    - row:
-      - text: "**CPU**"
-      - text: "{{ pre.cpuName }}"
-        size: 7
-    - row:
-      - text: "**Uptime**"
-      - text: "{{ pre.uptimeClock }}"
-        size: 7
     - row:
       - text: CPU ({{ fix(100 * cpu.load, 2) }}%)
         bars:
@@ -39,21 +25,108 @@ content:
         - fracx: pre.memUsedFrac
           color: bar
         - color: bar-bg
+
+    - row:
+      - text: "**System**"
+      - text: "{{ sys.hostname }} @ {{ pre.sysName }}"
+        size: 7
+    - row:
+      - text: ""
+      - text: "{{ pre.localeTime }}"
+        size: 7
+    - row:
+      - text: "**Uptime**"
+      - text: "{{ pre.uptimeClock }}"
+        size: 7
+    - row:
+      - text: "**OS**"
+      - text: "{{ pre.osName }}"
+        size: 7
+    - row:
+      - text: "**CPU**"
+      - text: "{{ pre.cpuName }}"
+        size: 7
   
-    - block: ---
+    - block: |
+        ---
+
+        ## Bookmarks
 
     - row:
       - text: "[Soil](https://github.com/NeillJohnston/soil)"
-      - text: "[Link](http://example.com/)"
-      - text: "[Link](http://example.com/)"
+      - text: "[Link1](http://example.com/)"
+      - text: "[Link2](http://example.com/)"
     - row:
-      - text: "[Link](http://example.com/)"
-      - text: "[Link](http://example.com/)"
-      - text: "[Link](http://example.com/)"
+      - text: "[Link3](http://example.com/)"
+      - text: "[Link4](http://example.com/)"
+      - text: "[Link5](http://example.com/)"
+
+  footer:
+    - widget: theme-switcher
+
+content-mobile:
+  main:
+    - block: |
+        ### Hello Soil (mobile)!
+
+        Welcome to your Soil page! Here you can host:
+        - Dynamic system stats
+        - Bookmarks and links
+        - Any other Markdown content you want
+
+        Check out your **soil.config.yaml** to start customizing.
+
+        ---
+    
+        #### System stats
+
     - row:
-      - text: "[Link](http://example.com/)"
-      - text: "[Link](http://example.com/)"
-      - text: "[Link](http://example.com/)"
+      - text: CPU ({{ fix(100 * cpu.load, 2) }}%)
+        bars:
+        - fracx: cpu.load
+          color: bar
+        - color: bar-bg
+      - text: Memory ({{ fix(100 * pre.memUsedFrac, 2) }}%)
+        bars:
+        - fracx: pre.memUsedFrac
+          color: bar
+        - color: bar-bg
+
+    - row:
+      - text: "**System**"
+      - text: "{{ sys.hostname }} @ {{ pre.sysName }}"
+        size: 3
+    - row:
+      - text: ""
+      - text: "{{ pre.localeTime }}"
+        size: 3
+    - row:
+      - text: "**Uptime**"
+      - text: "{{ pre.uptimeClock }}"
+        size: 3
+    - row:
+      - text: "**OS**"
+      - text: "{{ pre.osName }}"
+        size: 3
+    - row:
+      - text: "**CPU**"
+      - text: "{{ pre.cpuName }}"
+        size: 3
+  
+    - block: |
+        ---
+
+        #### Bookmarks
+
+    - row:
+      - text: "[Soil](https://github.com/NeillJohnston/soil)"
+      - text: "[Link1](http://example.com/)"
+    - row:
+      - text: "[Link2](http://example.com/)"
+      - text: "[Link3](http://example.com/)"
+    - row:
+      - text: "[Link4](http://example.com/)"
+      - text: "[Link5](http://example.com/)"
 
   footer:
     - widget: theme-switcher

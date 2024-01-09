@@ -63,7 +63,9 @@ hr {
     margin-bottom: 1em;
 }
 
-/* Text align utils */
+/* Text utils */
+.error { color: red; }
+
 .text.left   { text-align: left; }
 .text.center { text-align: center; }
 .text.right  { text-align: right; }

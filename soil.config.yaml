@@ -1,6 +1,5 @@
 content:
   main:
-    - block: "{{ JSON.stringify({time,sys,cpu,gpu,mem,os,pre}) }}"
     - block: |
         # Hello Soil (desktop)!
 

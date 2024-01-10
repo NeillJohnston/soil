@@ -84,7 +84,7 @@ Now, on to the tables:
 
 ### Raw system data
 
-System data is fetched using the [systeminformation](https://www.npmjs.com/package/systeminformation) library. Most of these fields have a corresponding entry (names edited for brevity and clarity, e.g. renaming _manufacturer_ to _make_) in their [documentation](https://systeminformation.io/v4/system.html). If you want to see exactly how data is fetched, see [`getSystemData()`](/src/routes/api/data/+server.ts).
+System data is fetched using the [systeminformation](https://www.npmjs.com/package/systeminformation) library. Most of these fields have a corresponding entry (names edited for brevity and clarity, e.g. renaming _manufacturer_ to _make_) in their [documentation](https://systeminformation.io/v4/system.html). If you want to see exactly how data is fetched, see [`getSystemData()`](/src/lib/systemData.tss).
 
 | Var    | Field     | Type   | Description
 | ------ | --------- | ------ | ---
@@ -139,11 +139,24 @@ System data is fetched using the [systeminformation](https://www.npmjs.com/packa
 
 You can see examples of all of this coming together in [soil.config.yaml](./soil.config.yaml).
 
+## Building
+
+```
+npm install
+npm run build
+```
+
+## Running
+
+```
+node build/index.js
+```
+
 ## Containerizing
 
-If you want to run Soil inside a container, I've provided a simple [Dockerfile](./Dockerfile) and [compose.yaml](./compose.yaml) that builds a container for Soil using a node (Alpine) image.
+If you want to run Soil inside a container (recommended), I've provided a simple [Dockerfile](./Dockerfile) and [compose.yaml](./compose.yaml) that builds a container for Soil using a node (Alpine) image.
 
-> Note that due to the restricted capabilities of containers, the system data that gets fetched might not be entirely accurate if you run this way. For instance, `sys.model` shows "Docker Container" and `os.distro` shows "Alpine Linux".
+Note that due to the restricted capabilities of containers, the system data that gets fetched might not be entirely accurate if you run this way. For instance, `sys.model` shows "Docker Container" and `os.distro` shows "Alpine Linux". To remedy this, you should `npm run staticData`. This will produce a file called staticData.json, which gets added to the container to provide static data that needs to come from outside the container.
 
 Modify the variables indicated in the compose file then `docker compose up`.
 

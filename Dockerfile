@@ -6,4 +6,4 @@ COPY package.json .
 COPY build ./build
 RUN npm install --omit=dev
 
-CMD node build/index.js
+CMD CONTAINER=yes node build/index.js

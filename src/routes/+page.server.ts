@@ -1,6 +1,8 @@
 import { zConfig } from '$lib/api.js';
 import fs from 'fs/promises';
 import YAML from 'yaml';
+import { extractStaticSystemData } from '$lib/systemData.js';
+import { env } from '$env/dynamic/private';
 
 export const load = async ({ fetch }) => {
     const [configText, dataRes] = await Promise.all([
@@ -33,5 +35,18 @@ export const load = async ({ fetch }) => {
 
     const data = await dataRes.json();
 
-    return { config, data, yamlError, zodError };
+    let res = { config, data, yamlError, zodError, staticData: {} };
+    if (env.CONTAINER) {
+        try {
+            const staticDataText = await fs.readFile('./staticData.json', 'utf-8');
+            const staticData = JSON.parse(staticDataText);
+    
+            res.staticData = extractStaticSystemData(staticData);
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
+    return res;
 };

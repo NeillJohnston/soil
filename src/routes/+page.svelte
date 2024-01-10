@@ -2,16 +2,23 @@
     import './css/normalize.css';
     import './css/base.css'
 
-    import type { Config, Data, Theme } from "$lib/api";
+    import type { Config, Data } from "$lib/api";
     import { expr } from "$lib/expr";
     import { theme } from "$lib/theme";
     import { Marked } from 'marked';
     import { onMount } from "svelte";
     import Content from './Content.svelte';
+    import merge from 'deepmerge';
 
-    export let data: { config: Config, data: Data, yamlError: any, zodError: any };
+    export let data: {
+        config: Config,
+        data: Data,
+        staticData: Partial<Data>,
+        yamlError: any,
+        zodError: any,
+    };
     const config = data.config;
-    let _data = data.data;
+    let _data = merge(data.data, data.staticData);
 
     let content = config?.content;
     let contentMobile = config?.['content-mobile'] ?? config?.content;
@@ -60,7 +67,8 @@
 
     const getData = async () => {
         const res = await fetch('/api/data');
-        _data = await res.json();
+        const parsed = await res.json();
+        _data = merge(parsed, data.staticData);
     }
 
     onMount(() => {

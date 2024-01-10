@@ -7,3 +7,4 @@ services:
     volumes:
       # Edit this path if you have soil.config.yaml stashed elsewhere
       - ./soil.config.yaml:/home/node/app/soil.config.yaml
+      - ./staticData.json:/home/node/app/staticData.json

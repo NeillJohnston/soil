@@ -78,7 +78,7 @@ In order to let you display dynamic content in the way you want, you can insert 
 
 > Responsible disclosure: **I have intentionally not put any effort into making computed content run securely.** Soil is meant to be a simple startpage that runs a little bit of JavaScript in your browser for aesthetic purposes, not a production-viable system monitoring solution.
 >
-> Everything here in the computed content section is made possible by running JavaScript `eval`s in your browser, and assumes that all of the code being run (which comes exclusively from your _soil.config.yaml_) is trusted. These `eval`s have about the same amount of access to your computer, and your Soil page, as any other piece of JavaScript being run in that browser tab.
+> Everything here in the computed content section is made possible by running JavaScript `eval`s in your browser, and assumes that all of the code being run (which comes exclusively from your _soil.config.yaml_) is trusted. These `eval`s have about the same amount of access to your computer as any other piece of JavaScript being run in that browser tab.
 
 Now, on to the tables:
 
@@ -141,9 +141,11 @@ You can see examples of all of this coming together in [soil.config.yaml](./soil
 
 ## Containerizing
 
-Due to the restricted capabilities of containers, the system data that gets fetched might not be entirely accurate if you run Soil within a container. But in case you still want to do this, I've provided a simple [Dockerfile](./Dockerfile) and [compose.yaml](./compose.yaml) that builds a container for Soil using a `node` (`alpine`) image.
+If you want to run Soil inside a container, I've provided a simple [Dockerfile](./Dockerfile) and [compose.yaml](./compose.yaml) that builds a container for Soil using a node (Alpine) image.
 
-Modify the variables indicated in the compose file then run `docker compose up`.
+> Note that due to the restricted capabilities of containers, the system data that gets fetched might not be entirely accurate if you run this way. For instance, `sys.model` shows "Docker Container" and `os.distro` shows "Alpine Linux".
+
+Modify the variables indicated in the compose file then `docker compose up`.
 
 ## Credits
 
